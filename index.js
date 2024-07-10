@@ -25,3 +25,14 @@ const dropTypesTable = async () => {
 };
 
 // dropTypesTable();
+
+const syncTypeTable = async () => {
+  try {
+    await db.Type.sync();
+    console.log(`Sync table has been done!`);
+  } catch (error) {
+    console.log(`Can't sync table: `, error.message);
+  }
+};
+
+// syncTypeTable();
