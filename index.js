@@ -36,3 +36,22 @@ const syncTypeTable = async () => {
 };
 
 // syncTypeTable();
+
+const addType = async () => {
+  const newType = {
+    title: 'Crossover2',
+    description: 'The most popular type for city',
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  };
+  try {
+    const type = await db.Type.create(newType, {
+      returning: ['id', 'updatedAt'],
+    });
+    console.log(type.dataValues);
+  } catch (error) {
+    console.log(`Can't add item to table:`, error.message);
+  }
+};
+
+addType();
