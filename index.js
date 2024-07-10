@@ -5,10 +5,23 @@ const db = require('./src/db/models');
 const dbCheck = async () => {
   try {
     await db.sequelize.authenticate();
-    console.log(`Connection with DB cars has been successfully done!`);
+    console.log(
+      `Connection with DB ${process.env.DB_NAME.toUpperCase()} has been successfully done!`
+    );
   } catch (error) {
     console.log(`Can't connect to DB: `, error.message);
   }
 };
 
 dbCheck();
+
+const dropTypesTable = async () => {
+  try {
+    await db.Type.drop();
+    console.log(`Table ${db.Type.name} has been droped!`);
+  } catch (error) {
+    console.log(`Can't drop table: `, error.message);
+  }
+};
+
+// dropTypesTable();
