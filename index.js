@@ -2,6 +2,8 @@ console.log('Server is started!');
 
 const db = require('./src/db/models');
 
+const { Brand, Type, Country } = db;
+
 const dbCheck = async () => {
   try {
     await db.sequelize.authenticate();
@@ -15,27 +17,27 @@ const dbCheck = async () => {
 
 dbCheck();
 
-const dropTypesTable = async () => {
+const dropSomeTable = async (model) => {
   try {
-    await db.Type.drop();
-    console.log(`Table ${db.Type.name} has been droped!`);
+    await model.drop();
+    console.log(`Table ${model.name} has been droped!`);
   } catch (error) {
     console.log(`Can't drop table: `, error.message);
   }
 };
 
-// dropTypesTable();
+// dropSomeTable(Country)
 
-const syncTypeTable = async () => {
+const syncTypeTable = async (model) => {
   try {
-    await db.Type.sync();
-    console.log(`Sync table has been done!`);
+    await model.sync();
+    console.log(`Sync ${model.name} table has been done!`);
   } catch (error) {
     console.log(`Can't sync table: `, error.message);
   }
 };
 
-// syncTypeTable();
+//  syncTypeTable(Country)
 
 const addType = async () => {
   const newType = {
@@ -54,4 +56,4 @@ const addType = async () => {
   }
 };
 
-addType();
+// addType();
