@@ -9,7 +9,7 @@
     "dbcreate": "npx sequelize db:create",
     "dbdrop": "npx sequelize db:drop",
     "migall": "npx sequelize db:migrate",
-    "migun": "npx sequelize db:migrate:undo:all"
+    "miguna": "npx sequelize db:migrate:undo:all"
   },
   "keywords": [],
   "author": "",
