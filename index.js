@@ -105,6 +105,12 @@ const getItems = async (model) => {
         },
       },
       raw: true,
+      // attributes: ['id', ['title', 'name']],
+      group: 'id',
+      attributes: {
+        exclude: ['createdAt', 'updatedAt'],
+        include: [[db.sequelize.fn('SUM', db.sequelize.col('id')), 'Total']],
+      },
     });
     // console.log(gettingItems);
     gettingItems.forEach((item) => {
