@@ -4,6 +4,13 @@ const db = require('./src/db/models');
 // ===================================
 const { Brand, Type, Country } = db;
 
+const newBrand = {
+  title: 'ZAZ',
+  description: 'Famous Ukrainian auto brand',
+  createdAt: new Date(),
+  updatedAt: new Date(),
+};
+
 const dbCheck = async () => {
   try {
     await db.sequelize.authenticate();
@@ -39,15 +46,9 @@ const syncSomeTable = async (model) => {
 
 //  syncSomeTable(Country)
 
-const addType = async () => {
-  const newType = {
-    title: 'Crossover2',
-    description: 'The most popular type for city',
-    createdAt: new Date(),
-    updatedAt: new Date(),
-  };
+const addItem = async (model, values) => {
   try {
-    const type = await db.Type.create(newType, {
+    const type = await model.create(values, {
       returning: ['id', 'updatedAt'],
     });
     console.log(type.dataValues);
@@ -56,4 +57,19 @@ const addType = async () => {
   }
 };
 
-// addType();
+// addItem(Brand, newBrand);
+
+const deleteItem = async (model) => {
+  try {
+    const delAmount = await model.destroy({
+      where: {
+        title: 'ZAZ',
+      },
+    });
+    console.log(`Number of deleting rows: ${delAmount}`);
+  } catch (error) {
+    console.log(`Can't delete item from table:`, error.message);
+  }
+};
+
+// deleteItem(Brand)
