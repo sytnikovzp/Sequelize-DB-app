@@ -78,7 +78,7 @@ const deleteItem = async (model) => {
 const addItems = async (model, values) => {
   try {
     await model.bulkCreate(values, {
-      fields: ['title', 'description'],
+      // fields: ['title', 'description'],
     });
   } catch (error) {
     console.log(`Can't add items to table:`, error.message);
@@ -86,3 +86,5 @@ const addItems = async (model, values) => {
 };
 
 // addItems(Brand, brands)
+// addItems(Type, types)
+// addItems(Country, countries)
