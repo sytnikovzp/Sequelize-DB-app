@@ -2,7 +2,13 @@ console.log('Server is started!');
 // ===================================
 const db = require('./src/db/models');
 // ===================================
-const { Brand, Type, Country } = db;
+const {
+  Brand,
+  Type,
+  Country,
+  Sequelize: { Op },
+  sequelize,
+} = db;
 const { brands, types, countries } = require('./src/constants');
 
 const newBrand = {
@@ -88,3 +94,25 @@ const addItems = async (model, values) => {
 // addItems(Brand, brands)
 // addItems(Type, types)
 // addItems(Country, countries)
+
+const getItems = async (model) => {
+  try {
+    const gettingItems = await model.findAll({
+      where: {
+        // id: 2,
+        title: {
+          [Op.like]: 'L%',
+        },
+      },
+      raw: true,
+    });
+    // console.log(gettingItems);
+    gettingItems.forEach((item) => {
+      console.log(`Item is: `, item);
+    });
+  } catch (error) {
+    console.log(`Can't get items from table:`, error.message);
+  }
+};
+
+getItems(Type);
