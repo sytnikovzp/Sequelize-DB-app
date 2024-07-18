@@ -3,6 +3,7 @@ console.log('Server is started!');
 const db = require('./src/db/models');
 // ===================================
 const { Brand, Type, Country } = db;
+const { brands, types, countries } = require('./src/constants');
 
 const newBrand = {
   title: 'ZAZ',
@@ -73,3 +74,15 @@ const deleteItem = async (model) => {
 };
 
 // deleteItem(Brand)
+
+const addItems = async (model, values) => {
+  try {
+    await model.bulkCreate(values, {
+      fields: ['title', 'description'],
+    });
+  } catch (error) {
+    console.log(`Can't add items to table:`, error.message);
+  }
+};
+
+// addItems(Brand, brands)
