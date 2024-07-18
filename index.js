@@ -1,7 +1,7 @@
 console.log('Server is started!');
-
+// ===================================
 const db = require('./src/db/models');
-
+// ===================================
 const { Brand, Type, Country } = db;
 
 const dbCheck = async () => {
@@ -28,16 +28,16 @@ const dropSomeTable = async (model) => {
 
 // dropSomeTable(Country)
 
-const syncTypeTable = async (model) => {
+const syncSomeTable = async (model) => {
   try {
-    await model.sync();
+    await model.sync({ alter: true });
     console.log(`Sync ${model.name} table has been done!`);
   } catch (error) {
     console.log(`Can't sync table: `, error.message);
   }
 };
 
-//  syncTypeTable(Country)
+//  syncSomeTable(Country)
 
 const addType = async () => {
   const newType = {
