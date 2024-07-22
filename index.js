@@ -86,6 +86,8 @@ const syncSomeTable = async (model) => {
 };
 
 //  syncSomeTable(User)
+//  syncSomeTable(Brand)
+//  syncSomeTable(Country)
 
 // =================== ADD =====================
 

@@ -9,6 +9,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      Brand.belongsTo(models.Country, { foreignKey: 'countryId' });
     }
   }
   Brand.init(
@@ -19,10 +20,20 @@ module.exports = (sequelize, DataTypes) => {
         unique: true,
       },
       description: DataTypes.TEXT,
+      createdAt: {
+        type: DataTypes.DATE,
+        allowNull: true,
+      },
+      updatedAt: {
+        type: DataTypes.DATE,
+        allowNull: true,
+      },
     },
     {
       sequelize,
       modelName: 'Brand',
+      tableName: 'Brands',
+      underscored: true,
     }
   );
   return Brand;
