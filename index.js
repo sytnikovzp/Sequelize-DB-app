@@ -25,6 +25,16 @@ const newCountry = {
   updated_at: new Date(),
 };
 
+const updatedCountry = {
+  title: 'JP',
+  updated_at: new Date(),
+};
+
+const updatedCounties = {
+  description: 'Unknown',
+  updated_at: new Date(),
+};
+
 const dbCheck = async () => {
   try {
     await db.sequelize.authenticate();
@@ -38,6 +48,8 @@ const dbCheck = async () => {
 
 dbCheck();
 
+// =================== DROP =====================
+
 const dropSomeTable = async (model) => {
   try {
     await model.drop();
@@ -49,6 +61,8 @@ const dropSomeTable = async (model) => {
 
 // dropSomeTable(Country)
 
+// =================== SYNC =====================
+
 const syncSomeTable = async (model) => {
   try {
     await model.sync({ alter: true });
@@ -59,6 +73,8 @@ const syncSomeTable = async (model) => {
 };
 
 //  syncSomeTable(Country)
+
+// =================== ADD =====================
 
 const addItem = async (model, values) => {
   try {
@@ -75,6 +91,22 @@ const addItem = async (model, values) => {
 
 // addItem(Country, newCountry);
 
+const addItems = async (model, values) => {
+  try {
+    await model.bulkCreate(values, {
+      // fields: ['title', 'description'],
+    });
+  } catch (error) {
+    console.log(`Can't add items to table:`, error.message);
+  }
+};
+
+// addItems(Brand, brands)
+// addItems(Type, types)
+// addItems(Country, countries)
+
+// =================== DELETE =====================
+
 const deleteItem = async (model) => {
   try {
     const delAmount = await model.destroy({
@@ -90,19 +122,7 @@ const deleteItem = async (model) => {
 
 // deleteItem(Brand)
 
-const addItems = async (model, values) => {
-  try {
-    await model.bulkCreate(values, {
-      // fields: ['title', 'description'],
-    });
-  } catch (error) {
-    console.log(`Can't add items to table:`, error.message);
-  }
-};
-
-// addItems(Brand, brands)
-// addItems(Type, types)
-// addItems(Country, countries)
+// =================== GET =====================
 
 const getItems = async (model) => {
   try {
@@ -131,3 +151,29 @@ const getItems = async (model) => {
 };
 
 // getItems(Type);
+
+// =================== UPDATE =====================
+
+const changeItems = async (model, values) => {
+  try {
+    // const updatedItems = await model.update(values, {
+    const [number, result] = await model.update(values, {
+      where: {
+        // id: 8,
+        title: {
+          [Op.like]: 'U%',
+        },
+      },
+      // returning: ['id'],
+      returning: ['*'],
+      raw: true,
+    });
+    // console.log(updatedItems);
+    console.log(number);
+    console.log(result);
+  } catch (error) {
+    console.log(`Can't update items from table:`, error.message);
+  }
+};
+
+// changeItems(Country, updatedCounties)
