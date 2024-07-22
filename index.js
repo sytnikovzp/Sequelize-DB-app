@@ -1,4 +1,6 @@
 console.log('Server is started!');
+
+const bcrypt = require('bcrypt');
 // ===================================
 const db = require('./src/db/models');
 // ===================================
@@ -203,3 +205,20 @@ const changeItems = async (model, values) => {
 };
 
 // changeItems(Country, updatedCounties)
+
+// =================== CRYPT TEST =====================
+
+const cryptTest = async () => {
+  const password = 'ASDFGHJ';
+  const anotherOnePassword = 'JHGFDSA';
+  const hash = await bcrypt.hash(password, 10);
+  console.log(`Hash is: `, hash);
+
+  const compareResult = await bcrypt.compare(password, hash);
+  console.log(`Right: `, compareResult);
+
+  const otherCompareResult = await bcrypt.compare(anotherOnePassword, hash);
+  console.log(`Error: `, otherCompareResult);
+};
+
+// cryptTest();
