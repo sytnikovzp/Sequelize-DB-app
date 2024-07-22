@@ -18,6 +18,13 @@ const newBrand = {
   updatedAt: new Date(),
 };
 
+const newCountry = {
+  title: 'JPPPPPPPPPPP',
+  description: 'Japan',
+  created_at: new Date(),
+  updated_at: new Date(),
+};
+
 const dbCheck = async () => {
   try {
     await db.sequelize.authenticate();
@@ -56,15 +63,17 @@ const syncSomeTable = async (model) => {
 const addItem = async (model, values) => {
   try {
     const type = await model.create(values, {
-      returning: ['id', 'updatedAt'],
+      returning: ['id'],
+      raw: true,
+      validate: false,
     });
-    console.log(type.dataValues);
+    console.log(type);
   } catch (error) {
     console.log(`Can't add item to table:`, error.message);
   }
 };
 
-// addItem(Brand, newBrand);
+// addItem(Country, newCountry);
 
 const deleteItem = async (model) => {
   try {
@@ -121,4 +130,4 @@ const getItems = async (model) => {
   }
 };
 
-getItems(Type);
+// getItems(Type);
