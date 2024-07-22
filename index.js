@@ -6,6 +6,7 @@ const {
   Brand,
   Type,
   Country,
+  User,
   Sequelize: { Op },
   sequelize,
 } = db;
@@ -14,6 +15,14 @@ const { brands, types, countries } = require('./src/constants');
 const newBrand = {
   title: 'ZAZ',
   description: 'Famous Ukrainian auto brand',
+  createdAt: new Date(),
+  updatedAt: new Date(),
+};
+
+const newUser = {
+  full_name: 'vasya pupkin',
+  email: 'v_p@gmail.com',
+  password: 'QWERTY',
   createdAt: new Date(),
   updatedAt: new Date(),
 };
@@ -34,6 +43,8 @@ const updatedCounties = {
   description: 'Unknown',
   updated_at: new Date(),
 };
+
+// =================== DB CHECK =====================
 
 const dbCheck = async () => {
   try {
@@ -81,7 +92,7 @@ const addItem = async (model, values) => {
     const type = await model.create(values, {
       returning: ['id'],
       raw: true,
-      validate: false,
+      // validate: false,
     });
     console.log(type);
   } catch (error) {
@@ -90,6 +101,7 @@ const addItem = async (model, values) => {
 };
 
 // addItem(Country, newCountry);
+// addItem(User, newUser);
 
 const addItems = async (model, values) => {
   try {
@@ -111,7 +123,8 @@ const deleteItem = async (model) => {
   try {
     const delAmount = await model.destroy({
       where: {
-        title: 'ZAZ',
+        // title: 'ZAZ',
+        full_name: 'vasya pupkin',
       },
     });
     console.log(`Number of deleting rows: ${delAmount}`);
@@ -121,6 +134,7 @@ const deleteItem = async (model) => {
 };
 
 // deleteItem(Brand)
+// deleteItem(User)
 
 // =================== GET =====================
 
@@ -129,21 +143,27 @@ const getItems = async (model) => {
     const gettingItems = await model.findAll({
       where: {
         // id: 2,
-        title: {
-          [Op.like]: 'L%',
+
+        // title: {
+        //   [Op.like]: 'L%',
+        // },
+
+        full_name: {
+          [Op.like]: 'vas%',
         },
       },
-      raw: true,
+
+      // raw: true,
       // attributes: ['id', ['title', 'name']],
-      group: 'id',
-      attributes: {
-        exclude: ['createdAt', 'updatedAt'],
-        include: [[db.sequelize.fn('SUM', db.sequelize.col('id')), 'Total']],
-      },
+      // group: 'id',
+      // attributes: {
+      // exclude: ['createdAt', 'updatedAt'],
+      // include: [[db.sequelize.fn('SUM', db.sequelize.col('id')), 'Total']],
+      // },
     });
     // console.log(gettingItems);
     gettingItems.forEach((item) => {
-      console.log(`Item is: `, item);
+      console.log(`Item is: `, item.full_name);
     });
   } catch (error) {
     console.log(`Can't get items from table:`, error.message);
@@ -151,6 +171,7 @@ const getItems = async (model) => {
 };
 
 // getItems(Type);
+getItems(User);
 
 // =================== UPDATE =====================
 

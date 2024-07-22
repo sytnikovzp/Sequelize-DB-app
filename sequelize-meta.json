@@ -2,5 +2,6 @@
   "20240709194506-create-brand.js",
   "20240709203945-create-type.js",
   "20240713081327-add-country-to-brand.js",
-  "20240713074339-create-country.js"
+  "20240713074339-create-country.js",
+  "20240722182642-create-user.js"
 ]
