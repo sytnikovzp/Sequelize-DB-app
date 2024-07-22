@@ -20,9 +20,9 @@ const newBrand = {
 };
 
 const newUser = {
-  full_name: 'vasya pupkin',
-  email: 'v_p@gmail.com',
-  password: 'QWERTY',
+  full_name: 'Petr Pyatochkin',
+  email: 'p_p@gmail.com',
+  password: 'QWERTY12',
   createdAt: new Date(),
   updatedAt: new Date(),
 };
@@ -83,7 +83,7 @@ const syncSomeTable = async (model) => {
   }
 };
 
-//  syncSomeTable(Country)
+//  syncSomeTable(User)
 
 // =================== ADD =====================
 
@@ -91,7 +91,7 @@ const addItem = async (model, values) => {
   try {
     const type = await model.create(values, {
       returning: ['id'],
-      raw: true,
+      // raw: true,
       // validate: false,
     });
     console.log(type);
@@ -124,6 +124,7 @@ const deleteItem = async (model) => {
     const delAmount = await model.destroy({
       where: {
         // title: 'ZAZ',
+
         full_name: 'vasya pupkin',
       },
     });
@@ -162,6 +163,7 @@ const getItems = async (model) => {
       // },
     });
     // console.log(gettingItems);
+
     gettingItems.forEach((item) => {
       console.log(`Item is: `, item.full_name);
     });
@@ -171,7 +173,7 @@ const getItems = async (model) => {
 };
 
 // getItems(Type);
-getItems(User);
+// getItems(User);
 
 // =================== UPDATE =====================
 
@@ -181,15 +183,18 @@ const changeItems = async (model, values) => {
     const [number, result] = await model.update(values, {
       where: {
         // id: 8,
+
         title: {
           [Op.like]: 'U%',
         },
       },
       // returning: ['id'],
+
       returning: ['*'],
       raw: true,
     });
     // console.log(updatedItems);
+
     console.log(number);
     console.log(result);
   } catch (error) {
